@@ -20,7 +20,8 @@ SELECT nombre AS "Nombre", rut AS "Fecha", to_char(fecha, 'YYYY-MM') AS "Periodo
 
 -- 4. Por medio de una subconsulta, listar los clientes con el nombre de la herramienta más
 -- arrendada
-SELECT cliente.nombre, cliente.rut, s.nombre AS "Herramienta", COUNT(*) AS "Cantidad" 
+--* Aporte del compañero Franco Contreras
+SELECT DISTINCT ON(cliente.nombre) cliente.nombre, cliente.rut, s.nombre AS "Herramienta", COUNT(*) AS "Cantidad" 
     FROM cliente INNER JOIN
         (SELECT * FROM arriendo INNER JOIN herramienta ON idherramienta = herramienta_idherramienta) AS s
-            ON rut = cliente_rut GROUP BY cliente.nombre, cliente.rut, s.nombre ORDER BY cliente.nombre, "Cantidad";
+            ON rut = cliente_rut GROUP BY cliente.nombre, cliente.rut, s.nombre ORDER BY cliente.nombre, "Cantidad" DESC;
